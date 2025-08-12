@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
@@ -42,5 +43,11 @@ export class UsersResolver {
   @UseGuards(GqlAuthGuard)
   removeUser(@CurrentUser() user: TokenPayload) {
     return this.usersService.remove(user._id);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query(() => User, { name: 'me' })
+  getMe(@CurrentUser() user: TokenPayload) {
+    return user;
   }
 }
