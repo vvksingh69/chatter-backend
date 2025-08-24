@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
@@ -28,6 +29,13 @@ export class AuthService {
     response.cookie('Authentication', token, {
       httpOnly: true,
       expires,
+    });
+  }
+
+  logout(response: Response) {
+    response.cookie('Authentication', '', {
+      httpOnly: true,
+      expires: new Date(), // by setting the expires time as new Date the cookie will expire immediately.
     });
   }
 }
